@@ -71,3 +71,18 @@
 -  **Track successful and failed loads using control variables (last good / bad records).**
 -  **Use max date logic to support incremental data loading.**
 
+## <div>**Data Pipeline**</div>
+**Extraction → Staging Area Processing → Dimensional Data Loading**
+![System Architecture photo](images/1st_control_flow.png)
+**Staging Area Processing**
+** Applied Simple Transformation
+- Performed data type conversion to ensure consistency and proper formatting.
+- Created derived columns for date handling and temporal analysis.
+![System Architecture photo](images/dataflow.png)
+## <div>**Fact Table Loading & Data Quality Checks**</div>
+-   Perform incremental extraction to retrieve only new records.
+-   Apply data validation rules to ensure values meet defined constraints.
+-   Load only validated and cleansed data into the fact table.
+-   Reject and isolate invalid records for further inspection or correction.
+-   Conduct post-load referential integrity checks to ensure all foreign keys correctly reference dimension tables.
+![System Architecture photo](images/2nd_control_flow.png)
