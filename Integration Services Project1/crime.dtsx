@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="crime"
   DTS:PackageType="5"
-  DTS:VersionBuild="100"
-  DTS:VersionGUID="{A5971853-B53F-4075-B25C-20065C5A9235}">
+  DTS:VersionBuild="125"
+  DTS:VersionGUID="{83E42F57-DFA5-4D82-B731-BA630BCAB455}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -432,25 +432,44 @@
       <DTS:VariableValue
         DTS:DataType="7">4/13/2026 9:36:30 PM</DTS:VariableValue>
     </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4CC8F78A-CFA6-4C73-88D1-4E50F2B805F0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="total_destination">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{49E12596-D23C-4A7C-BBC8-A82EF159B6C0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="total_records_issue">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{33AC380E-DB35-44CC-B22A-66851C0302EB}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="total_source">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{48CF4958-C068-4226-AAD9-CC4E08A5B55A}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="total_undefined">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
-    <DTS:Executable
-      DTS:refId="Package\fact_crimes"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{81FC0BAC-B148-411B-BC41-DC26A9C15409}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="fact_crimes"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
-          SQLTask:SqlStatementSource="&#xA;insert into DWH.fact_crime (junk_detail_key,victim_factor_key,date_key,time_key,location_key,&#xA;category_key,Response_Time_Min,Property_Loss_EGP,Officer_Count,Victim_Age,Suspect_Age)&#xA;select&#xA;djd.id as junk_detail_key,&#xA;df.Id as victom_factor_id,&#xA;dd.Date_Key as date_key,&#xA;dt.Time_Key as time_key,&#xA;dl.Id as location_key,&#xA;dc.Id as category_key,&#xA;Response_Time_Min,&#xA;Property_Loss_EGP,&#xA;Officer_Count,&#xA;Victim_Age,&#xA;Suspect_Age&#xA;from StagingArea.crime_core cc join StagingArea.case_details cd &#xA;on cc.Crime_ID=cd.Crime_ID&#xA;join StagingArea.victim_factors vf&#xA;on cc.Crime_ID=vf.Crime_ID &#xA;join DWH.dim_category dc &#xA;on cc.Crime_Category=dc.Crime_Category and cc.Crime_Type=dc.Crime_Type&#xA;join DWH.dim_location dl &#xA;on  cc.Area=dl.Area and cc.District =dl.District and cc.Location_Type=dl.Location_Type &#xA;and cc.Neighborhood= dl.Neighborhood &#xA;join DWH.Dim_Time dt &#xA;on cast(cc.Crime_Time as time)=dt.Time_Value&#xA;join DWH.Dim_Date dd &#xA;on cast(cc.Crime_full_date as date)= cast(dd.Full_Date as date)&#xA;join DWH.dim_factors df&#xA;on vf.Victim_Gender=df.Victim_Gender and vf.Suspect_Gender=df.Suspect_Gender and&#xA;vf.Repeat_Offender=df.Repeat_Offender and vf.Domestic_Related=df.Domestic_Related&#xA;join DWH.dim_junk_detail djd &#xA;on cd.Weapon_Used=djd.Weapon_Used and cc.Reporting_Channel=djd.Reporting_Channel&#xA;and cd.Arrest_Made=djd.Arrest_Made and cd.Injury_Level=djd.Injury_Level &#xA;and cd.Priority_Level=djd.Priority_Level&#xA;where cast(cc.Crime_full_date as date)&gt;(select max(last_date) from incremental_table);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\getMaxDate"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
@@ -492,7 +511,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="dim_category"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -509,7 +528,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="dim_crime_factors"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -526,7 +545,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="dim_junk_detail"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -543,7 +562,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="dim_location"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -552,6 +571,872 @@
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoadingToFactTable"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{774297C3-31A6-4807-8DEA-FFFE47FA1C1E}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoadingToFactTable">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\BadData_QualtiyChecks"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{EA0B5B7A-590B-49C1-9901-E69DF9AE0B41}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="BadData_QualtiyChecks"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="insert into badData.rejectedRows &#xA;(full_date,&#xA;Officer_Count,&#xA;Response_Time_Min,&#xA;Property_Loss_EGP,&#xA;Priority_Level,&#xA;Victim_Age,&#xA;Suspect_Age,&#xA;Suspect_Gender,&#xA;Victim_Gender,&#xA;description&#xA;)&#xA;select &#xA;cc.Crime_full_date,&#xA;Officer_Count,&#xA;Response_Time_Min,&#xA;Property_Loss_EGP,&#xA;Priority_Level,&#xA;vf.Victim_Age,&#xA;vf.Suspect_Age,&#xA;vf.Suspect_Gender,&#xA;vf.Victim_Gender,&#xA;case &#xA;when &#xA;&#x9;Officer_Count &lt; 0 then 'negative Officer count'&#xA;when &#xA;&#x9;Response_Time_Min &lt; 0 then 'negative Response_Time_Min'&#xA;when &#xA;&#x9;Property_Loss_EGP &lt; 0 then 'negative Property_Loss_EGP' &#xA;when &#xA;&#x9;Priority_Level &lt;&gt; 'Low' and Priority_Level &lt;&gt; 'High' and Priority_Level &lt;&gt; 'Medium' and Priority_Level &lt;&gt; 'Critical' &#xA;then 'Invalid value of Priority level' &#xA;when &#xA;&#x9;Property_Loss_EGP &lt; 0 then 'negative Property_Loss_EGP' &#xA;when vf.Victim_Age&lt;=0 then 'invalid victim age'&#xA;when vf.Suspect_Age&lt;=0 then 'invalid suspect age'&#xA;when vf.Suspect_Gender &lt;&gt;'Female' and vf.Suspect_Gender &lt;&gt;'Male' then 'invalid type of Suspect_Gender'&#xA;when vf.Victim_Gender &lt;&gt;'Female' and vf.Suspect_Gender &lt;&gt;'Male' then 'invalid type of Victim_Gender'&#xA;end as description&#xA;from [StagingArea].[case_details] cd join [StagingArea].[victim_factors] vf&#xA;on cd.Crime_ID=vf.Crime_ID &#xA;join [StagingArea].[crime_core] cc&#xA;on cc.Crime_ID=vf.Crime_ID &#xA;where &#xA;cast(cc.Crime_full_date as date)&gt;(select max(last_bad_record) from incremental_table)&#xA;and(&#xA;cd.Officer_Count&lt;=0 or cd.Response_Time_Min&lt;=0 or cd.Property_Loss_EGP&lt;=0 &#xA;or cd.Priority_Level not in ('Low','High','Medium','Critical')&#xA;or vf.Victim_Age&lt;=0 or vf.Suspect_Age&lt;=0 or vf.Suspect_Gender not in ('Female','Male')&#xA;or vf.Suspect_Gender not in ('Female','Male')&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\checking rows number"
+          DTS:CreationName="Microsoft.ScriptTask"
+          DTS:Description="Script Task"
+          DTS:DTSID="{1F0F967A-6BD4-463B-8187-A7195716FBFC}"
+          DTS:ExecutableType="Microsoft.ScriptTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="checking rows number"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ScriptProject
+              Name="ST_512ff8d520af4fadb788db8e670c9a37"
+              VSTAMajorVersion="16"
+              VSTAMinorVersion="0"
+              Language="CSharp"
+              ReadOnlyVariables="User::total_destination,User::total_source">
+              <ProjectItem
+                Name="Properties\AssemblyInfo.cs"
+                Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_512ff8d520af4fadb788db8e670c9a37")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("HP")]
+[assembly: AssemblyProduct("ST_512ff8d520af4fadb788db8e670c9a37")]
+[assembly: AssemblyCopyright("Copyright @ HP 2026")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Resources.resx"
+                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+              <ProjectItem
+                Name="ScriptMain.cs"
+                Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+#endregion
+
+namespace ST_512ff8d520af4fadb788db8e670c9a37
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+		{
+            string source = Dts.Variables["User::total_source"].Value.ToString();
+            string destination = Dts.Variables["User::total_destination"].Value.ToString();
+            if (source == destination)
+            {
+                MessageBox.Show("Source Number = Destination Number");
+            }
+            else { 
+                MessageBox.Show("Source Number != Destination Number");
+
+            }
+        }
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Resources.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_512ff8d520af4fadb788db8e670c9a37.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_512ff8d520af4fadb788db8e670c9a37.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_512ff8d520af4fadb788db8e670c9a37.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_512ff8d520af4fadb788db8e670c9a37.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_512ff8d520af4fadb788db8e670c9a37.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+              <ProjectItem
+                Name="Project"
+                Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="3.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:Language>msBuild</msb:Language>
+    <msb:CodeName>ST_512ff8d520af4fadb788db8e670c9a37</msb:CodeName>
+    <msb:DisplayName>ST_512ff8d520af4fadb788db8e670c9a37</msb:DisplayName>
+    <msb:ProjectId>{1459E350-E14A-453A-B81D-AB5CA4734104}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="ST_512ff8d520af4fadb788db8e670c9a37.csproj" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="ScriptMain.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.Designer.cs"
+                Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_512ff8d520af4fadb788db8e670c9a37.Properties.Settings.get_Default():ST_512ff8d520af4fadb788db8e670c9a37.Properties.Sett" +
+    "ings")]
+
+namespace ST_512ff8d520af4fadb788db8e670c9a37.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+              <ProjectItem
+                Name="Properties\Settings.settings"
+                Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+              <ProjectItem
+                Name="ST_512ff8d520af4fadb788db8e670c9a37.csproj"
+                Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2df4c66d-8469-460c-924c-0f8be3378141}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ST_512ff8d520af4fadb788db8e670c9a37</RootNamespace>
+    <AssemblyName>ST_512ff8d520af4fadb788db8e670c9a37</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.ManagedDTS, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.ScriptTask, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+         <Generator>ResXFileCodeGenerator</Generator>
+         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+             <AutoGen>True</AutoGen>
+         <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+         <Generator>SettingsSingleFileGenerator</Generator>
+         <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+         <AutoGen>True</AutoGen>
+         <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptMain.cs">
+         <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="ScriptTask"
+                           HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}"
+                           ApplicationType="usd"
+                           Language="cs"
+                           TemplatesPath=""
+                           DebugInfoCommandLine=""
+                           DebugInfoWorkingDir=""
+                           IconImageList=""/>
+        <Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex="">
+        </Host>
+        <ProjectClient>
+            <HostIdentifier>SSIS_ST160</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></ProjectItem>
+              <BinaryItem
+                Name="ST_512ff8d520af4fadb788db8e670c9a37.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAMJ962kAAAAAAAAAAOAAIiALATAAABAAAAAIAAAAAAAA9i4A
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAKQuAABPAAAAAEAAAIAEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA/A4AAAAgAAAAEAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAIAEAAAAQAAAAAYAAAASAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAGAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAADY
+LgAAAAAAAEgAAAACAAUAJCEAAMgMAAABAAAAAAAAAOwtAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAABMwAwBfAAAAAQAAEQIoEAAACm8RAAAKcgEAAHBvEgAACm8T
+AAAKbxQAAAoCKBAAAApvEQAACnInAABwbxIAAApvEwAACm8UAAAKCgYoFQAACiwMclcAAHAoFgAA
+CiYqcp0AAHAoFgAACiYqHgIoFwAACioeAigYAAAKKq5+AQAABC0ecuUAAHDQAwAAAigZAAAKbxoA
+AApzGwAACoABAAAEfgEAAAQqGn4CAAAEKh4CgAIAAAQqGn4DAAAEKh4CKBwAAAoqLnMIAAAGgAMA
+AAQqAAAAQlNKQgEAAQAAAAAADAAAAHY0LjAuMzAzMTkAAAAABQBsAAAA6AMAACN+AABUBAAAjAUA
+ACNTdHJpbmdzAAAAAOAJAABYAQAAI1VTADgLAAAQAAAAI0dVSUQAAABICwAAgAEAACNCbG9iAAAA
+AAAAAAIAAAFXHaIBCQMAAAD6ATMAFgAAAQAAACAAAAAFAAAABgAAAAkAAAABAAAAHAAAAAIAAAAQ
+AAAAAQAAAAIAAAADAAAABAAAAAEAAAAFAAAAAQAAAAEAAAAAAHUDAQAAAAAABgAlAkUEBgC0AkUE
+BgBxATIEDwC5BAAABgCeAfMDBgAIAvMDBgDpAfMDBgCbAvMDBgBFAvMDBgBeAvMDBgC1AfMDBgDQ
+AeICCgB5AiQDCgDwACQDBgCtA6YDBgBUATIEBgBBBaYDBgAVBGUEBgAFBN4DDgAkAV8DDgCFAV8D
+DgAMAckDBgA5AUUECgBNAyQDEgD7BJsAEgBuAJsABgD+AqYDFgBmBQ4FFgBUBQ4FBgC7AKYDBgB3
+AKYDBgB1BfMDAAAAACUAAAAAAAEAAQABABAAvgMBADkAAQABAAAAEABsBMgERQABAAMAAAEQAAUF
+yARZAAMABwADAQAAMwUAAD0ABAAKABEAsgN0ABEA4AB4ABEAXgB8AAYGTQCAAFaAIwWDAFaAwACD
+AFAgAAAAAIYAxAMGAAEAuyAAAAAAhhglBAYAAQDDIAAAAACDGCUEBgABAMsgAAAAAJMIEQSHAAEA
+9yAAAAAAkwjIAIwAAQD+IAAAAACTCNQAkQABAAYhAAAAAJYISAWXAAIADSEAAAAAhhglBAYAAgAV
+IQAAAACRGCsEnAACAAAAAQDcAgkAJQQBABEAJQQGABkAJQQKACkAJQQQADEAJQQQADkAJQQQAEEA
+JQQQAEkAJQQQAFEAJQQQAFkAJQQQAGEAJQQQAGkAJQQGAIEAJQQGAKkAJQQVALkAJQQGAHEAKwUf
+AMEA9wQkAMkAnQMpANEA0gIvAIkA/AIzANkAfgU3AOEAYQU9AHEAJQQGAIkAJQQGAPEAiQBDAPEA
+cQVKAJEAJQRQALEAJQQGAAgAFABqAAgAGABvACkAcwDXAC4ACwCvAC4AEwC4AC4AGwDXAC4AIwDg
+AC4AKwAJAS4AMwAJAS4AOwAPAS4AQwDgAC4ASwAXAS4AUwAJAS4AWwAwAUMAYwBvAEkAcwDXAGEA
+ewBvAGMAawBvABsAAwABAAQAAwAAABUEoAAAAOgApQAAAEwFqgACAAQAAwACAAUABQABAAYABQAC
+AAcABwAEgAAAAQAAAIoluXoAAAAAAAABAAAABAAAAAAAAAAAAAAAWABVAAAAAAAQAAAAAAAAAAAA
+AABhAAUDAAAAAAQAAAAAAAAAAAAAAFgApgMAAAAAEAAAAAAAAAAAAAAAYQAuAAAAAAAEAAAAAAAA
+AAAAAABYAA4FAAAAAAAAAAABAAAAdgQAAAUAAgAAAABTVF81MTJmZjhkNTIwYWY0ZmFkYjc4OGRi
+OGU2NzBjOWEzNwA8TW9kdWxlPgBNaWNyb3NvZnQuU3FsU2VydmVyLk1hbmFnZWREVFMAdmFsdWVf
+XwBtc2NvcmxpYgBkZWZhdWx0SW5zdGFuY2UAVmFyaWFibGUAUnVudGltZVR5cGVIYW5kbGUAR2V0
+VHlwZUZyb21IYW5kbGUATWljcm9zb2Z0LlNxbFNlcnZlci5EdHMuUnVudGltZQBUeXBlAEZhaWx1
+cmUAZ2V0X0N1bHR1cmUAc2V0X0N1bHR1cmUAcmVzb3VyY2VDdWx0dXJlAFZTVEFSVFNjcmlwdE9i
+amVjdE1vZGVsQmFzZQBBcHBsaWNhdGlvblNldHRpbmdzQmFzZQBFZGl0b3JCcm93c2FibGVTdGF0
+ZQBDb21waWxlckdlbmVyYXRlZEF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJDb2RlQXR0cmlidXRl
+AERlYnVnZ2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRlAEFzc2VtYmx5VGl0
+bGVBdHRyaWJ1dGUAQXNzZW1ibHlUcmFkZW1hcmtBdHRyaWJ1dGUAVGFyZ2V0RnJhbWV3b3JrQXR0
+cmlidXRlAEFzc2VtYmx5Q29uZmlndXJhdGlvbkF0dHJpYnV0ZQBBc3NlbWJseURlc2NyaXB0aW9u
+QXR0cmlidXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0
+QXR0cmlidXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAFNTSVNTY3JpcHRUYXNrRW50cnlQ
+b2ludEF0dHJpYnV0ZQBBc3NlbWJseUNvbXBhbnlBdHRyaWJ1dGUAUnVudGltZUNvbXBhdGliaWxp
+dHlBdHRyaWJ1dGUAZ2V0X1ZhbHVlAHZhbHVlAFN5c3RlbS5SdW50aW1lLlZlcnNpb25pbmcAVG9T
+dHJpbmcATWljcm9zb2Z0LlNxbFNlcnZlci5TY3JpcHRUYXNrAE1pY3Jvc29mdC5TcWxTZXJ2ZXIu
+RHRzLlRhc2tzLlNjcmlwdFRhc2sAU2NyaXB0T2JqZWN0TW9kZWwAU3lzdGVtLkNvbXBvbmVudE1v
+ZGVsAFNUXzUxMmZmOGQ1MjBhZjRmYWRiNzg4ZGI4ZTY3MGM5YTM3LmRsbABnZXRfSXRlbQBTeXN0
+ZW0ARW51bQByZXNvdXJjZU1hbgBTY3JpcHRNYWluAFN5c3RlbS5Db25maWd1cmF0aW9uAFN5c3Rl
+bS5HbG9iYWxpemF0aW9uAFN5c3RlbS5SZWZsZWN0aW9uAEN1bHR1cmVJbmZvAGdldF9SZXNvdXJj
+ZU1hbmFnZXIALmN0b3IALmNjdG9yAFN5c3RlbS5EaWFnbm9zdGljcwBTeXN0ZW0uUnVudGltZS5D
+b21waWxlclNlcnZpY2VzAFN5c3RlbS5SZXNvdXJjZXMAU1RfNTEyZmY4ZDUyMGFmNGZhZGI3ODhk
+YjhlNjcwYzlhMzcuUHJvcGVydGllcy5SZXNvdXJjZXMucmVzb3VyY2VzAERlYnVnZ2luZ01vZGVz
+AFNUXzUxMmZmOGQ1MjBhZjRmYWRiNzg4ZGI4ZTY3MGM5YTM3LlByb3BlcnRpZXMAZ2V0X1Zhcmlh
+YmxlcwBTZXR0aW5ncwBTeXN0ZW0uV2luZG93cy5Gb3JtcwBTdWNjZXNzAGdldF9EdHMAU2NyaXB0
+UmVzdWx0cwBPYmplY3QAZ2V0X0RlZmF1bHQARGlhbG9nUmVzdWx0AFNob3cATWVzc2FnZUJveABn
+ZXRfQXNzZW1ibHkAb3BfRXF1YWxpdHkAAAAAJVUAcwBlAHIAOgA6AHQAbwB0AGEAbABfAHMAbwB1
+AHIAYwBlAAAvVQBzAGUAcgA6ADoAdABvAHQAYQBsAF8AZABlAHMAdABpAG4AYQB0AGkAbwBuAABF
+UwBvAHUAcgBjAGUAIABOAHUAbQBiAGUAcgAgAD0AIABEAGUAcwB0AGkAbgBhAHQAaQBvAG4AIABO
+AHUAbQBiAGUAcgAAR1MAbwB1AHIAYwBlACAATgB1AG0AYgBlAHIAIAAhAD0AIABEAGUAcwB0AGkA
+bgBhAHQAaQBvAG4AIABOAHUAbQBiAGUAcgAAcVMAVABfADUAMQAyAGYAZgA4AGQANQAyADAAYQBm
+ADQAZgBhAGQAYgA3ADgAOABkAGIAOABlADYANwAwAGMAOQBhADMANwAuAFAAcgBvAHAAZQByAHQA
+aQBlAHMALgBSAGUAcwBvAHUAcgBjAGUAcwAAAOyywI/nqRpJjf6vlcKauHUABCABAQgDIAABBSAB
+ARERBCABAQ4FIAEBEVEDBwEOBCAAEmEEIAASZQUgARJpHAMgABwDIAAOBQACAg4OBQABEXUOBgAB
+EnkRfQUgABKAgQcgAgEOEoCBCLd6XFYZNOCJCImEXc2AgMyRBAAAAAAEAQAAAAMGEkkDBhJNAwYS
+EAIGCAMGERQEAAASSQQAABJNBQABARJNBAAAEhADAAABBAgAEkkECAASTQQIABIQCAEACAAAAAAA
+HgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQgBAAIAAAAAACgBACNTVF81MTJmZjhkNTIw
+YWY0ZmFkYjc4OGRiOGU2NzBjOWEzNwAABQEAAAAABwEAAkhQAAAYAQATQ29weXJpZ2h0IEAgSFAg
+MjAyNgAATQEAHC5ORVRGcmFtZXdvcmssVmVyc2lvbj12NC43LjIBAFQOFEZyYW1ld29ya0Rpc3Bs
+YXlOYW1lFC5ORVQgRnJhbWV3b3JrIDQuNy4yAAC0AAAAzsrvvgEAAACRAAAAbFN5c3RlbS5SZXNv
+dXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9
+bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2Vz
+LlJ1bnRpbWVSZXNvdXJjZVNldAIAAAAAAAAAAAAAAFBBRFBBRFC0AAAAzC4AAAAAAAAAAAAA5i4A
+AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAANguAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3Jl
+ZS5kbGwAAAAAAP8lACAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAABABAAAAAYAACAAAAAAAAAAAAAAAAAAAABAAEAAAAwAACAAAAAAAAAAAAAAAAAAAABAAAA
+AABIAAAAWEAAACIEAAAAAAAAAAAAACIENAAAAFYAUwBfAFYARQBSAFMASQBPAE4AXwBJAE4ARgBP
+AAAAAAC9BO/+AAABAAAAAQC5eoolAAABALl6iiU/AAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAA
+RAAAAAEAVgBhAHIARgBpAGwAZQBJAG4AZgBvAAAAAAAkAAQAAABUAHIAYQBuAHMAbABhAHQAaQBv
+AG4AAAAAAAAAsASCAwAAAQBTAHQAcgBpAG4AZwBGAGkAbABlAEkAbgBmAG8AAABeAwAAAQAwADAA
+MAAwADAANABiADAAAAAaAAEAAQBDAG8AbQBtAGUAbgB0AHMAAAAAAAAAJgADAAEAQwBvAG0AcABh
+AG4AeQBOAGEAbQBlAAAAAABIAFAAAAAAAHAAJAABAEYAaQBsAGUARABlAHMAYwByAGkAcAB0AGkA
+bwBuAAAAAABTAFQAXwA1ADEAMgBmAGYAOABkADUAMgAwAGEAZgA0AGYAYQBkAGIANwA4ADgAZABi
+ADgAZQA2ADcAMABjADkAYQAzADcAAAA+AA8AAQBGAGkAbABlAFYAZQByAHMAaQBvAG4AAAAAADEA
+LgAwAC4AOQA2ADEAMAAuADMAMQA0ADEANwAAAAAAcAAoAAEASQBuAHQAZQByAG4AYQBsAE4AYQBt
+AGUAAABTAFQAXwA1ADEAMgBmAGYAOABkADUAMgAwAGEAZgA0AGYAYQBkAGIANwA4ADgAZABiADgA
+ZQA2ADcAMABjADkAYQAzADcALgBkAGwAbAAAAEwAFAABAEwAZQBnAGEAbABDAG8AcAB5AHIAaQBn
+AGgAdAAAAEMAbwBwAHkAcgBpAGcAaAB0ACAAQAAgAEgAUAAgADIAMAAyADYAAAAqAAEAAQBMAGUA
+ZwBhAGwAVAByAGEAZABlAG0AYQByAGsAcwAAAAAAAAAAAHgAKAABAE8AcgBpAGcAaQBuAGEAbABG
+AGkAbABlAG4AYQBtAGUAAABTAFQAXwA1ADEAMgBmAGYAOABkADUAMgAwAGEAZgA0AGYAYQBkAGIA
+NwA4ADgAZABiADgAZQA2ADcAMABjADkAYQAzADcALgBkAGwAbAAAAGgAJAABAFAAcgBvAGQAdQBj
+AHQATgBhAG0AZQAAAAAAUwBUAF8ANQAxADIAZgBmADgAZAA1ADIAMABhAGYANABmAGEAZABiADcA
+OAA4AGQAYgA4AGUANgA3ADAAYwA5AGEAMwA3AAAAQgAPAAEAUAByAG8AZAB1AGMAdABWAGUAcgBz
+AGkAbwBuAAAAMQAuADAALgA5ADYAMQAwAC4AMwAxADQAMQA3AAAAAABGAA8AAQBBAHMAcwBlAG0A
+YgBsAHkAIABWAGUAcgBzAGkAbwBuAAAAMQAuADAALgA5ADYAMQAwAC4AMwAxADQAMQA3AAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAwAAAD4PgAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
+            </ScriptProject>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\fact_crimes"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{81FC0BAC-B148-411B-BC41-DC26A9C15409}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="fact_crimes"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="insert into DWH.fact_crime (junk_detail_key,victim_factor_key,date_key,time_key,location_key,&#xA;category_key,Response_Time_Min,Property_Loss_EGP,Officer_Count,Victim_Age,Suspect_Age)&#xA;select&#xA;djd.id as junk_detail_key,&#xA;df.Id as victom_factor_id,&#xA;dd.Date_Key as date_key,&#xA;dt.Time_Key as time_key,&#xA;dl.Id as location_key,&#xA;dc.Id as category_key,&#xA;Response_Time_Min,&#xA;Property_Loss_EGP,&#xA;Officer_Count,&#xA;Victim_Age,&#xA;Suspect_Age&#xA;from StagingArea.crime_core cc join StagingArea.case_details cd &#xA;on cc.Crime_ID=cd.Crime_ID&#xA;left join StagingArea.victim_factors vf&#xA;on cc.Crime_ID=vf.Crime_ID &#xA;left join DWH.dim_category dc &#xA;on cc.Crime_Category=dc.Crime_Category and cc.Crime_Type=dc.Crime_Type&#xA;left join DWH.dim_location dl &#xA;on  cc.Area=dl.Area and cc.District =dl.District and cc.Location_Type=dl.Location_Type &#xA;and cc.Neighborhood= dl.Neighborhood &#xA;left join DWH.Dim_Time dt &#xA;on cast(cc.Crime_Time as time)=dt.Time_Value&#xA;left join DWH.Dim_Date dd &#xA;on cast(cc.Crime_full_date as date)= cast(dd.Full_Date as date)&#xA;left join DWH.dim_factors df&#xA;on vf.Victim_Gender=df.Victim_Gender and vf.Suspect_Gender=df.Suspect_Gender and&#xA;vf.Repeat_Offender=df.Repeat_Offender and vf.Domestic_Related=df.Domestic_Related&#xA;left join DWH.dim_junk_detail djd &#xA;on cd.Weapon_Used=djd.Weapon_Used and cc.Reporting_Channel=djd.Reporting_Channel&#xA;and cd.Arrest_Made=djd.Arrest_Made and cd.Injury_Level=djd.Injury_Level &#xA;and cd.Priority_Level=djd.Priority_Level&#xA;where cast(cc.Crime_full_date as date)&gt;(select max(last_date) from incremental_table)&#xA;and cd.Officer_Count&gt;0 and cd.Response_Time_Min&gt;0 and cd.Property_Loss_EGP&gt;0 &#xA;and cd.Priority_Level in ('Low','High','Medium','Critical')&#xA;and vf.Victim_Age&gt;0 and vf.Suspect_Age&gt;0 and vf.Suspect_Gender in ('Female','Male')&#xA;and vf.Suspect_Gender in ('Female','Male');&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\laod-bad-refernce-found"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0B27241B-7250-4F63-9B93-047DC7266373}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="laod-bad-refernce-found"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="insert into badData.InValidReferenceRows &#xA;(category_key,location_key,factors_key,junk_details_key,date_key,time_key,Response_Time_Min,Property_Loss_EGP,Officer_Count,Victim_Age,Suspect_Age)&#xA;select&#xA;dc.Id as category_key, &#xA;dl.Id as location_key , &#xA;df.Id as factors_key, &#xA;djd.id as junk_details_key,&#xA;date_key,&#xA;time_key,&#xA;Response_Time_Min,&#xA;Property_Loss_EGP,&#xA;Officer_Count,&#xA;Victim_Age,&#xA;Suspect_Age&#xA;from DWH.fact_crime fc&#xA;left join DWH.dim_category dc&#xA;on fc.category_key=dc.Id&#xA;left join DWH.dim_location dl &#xA;on fc.location_key=dl.Id&#xA;left join DWH.dim_factors df&#xA;on fc.victim_factor_key=df.Id&#xA;left join DWH.dim_junk_detail djd &#xA;on fc.junk_detail_key=djd.id&#xA;where dc.Id is null or dl.Id is null or df.Id is null or djd.id is null&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\Referential Integrity"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2FEB68F8-134A-4107-AF79-3D3FFE55DE24}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Referential Integrity"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="SELECT COUNT(*) AS total_undefined&#xA;FROM DWH.fact_crime fc&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1 FROM DWH.dim_category dc&#xA;    WHERE dc.Id = fc.category_key&#xA;)&#xA;OR NOT EXISTS (&#xA;    SELECT 1 FROM DWH.dim_location dl&#xA;    WHERE dl.Id = fc.location_key&#xA;)&#xA;OR NOT EXISTS (&#xA;    SELECT 1 FROM DWH.dim_factors df&#xA;    WHERE df.Id = fc.victim_factor_key&#xA;)&#xA;OR NOT EXISTS (&#xA;    SELECT 1 FROM DWH.dim_junk_detail djd&#xA;    WHERE djd.Id = fc.junk_detail_key&#xA;);"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="total_undefined"
+                SQLTask:DtsVariableName="User::total_undefined" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\Source_Vs_Targe_For_Rows_Num"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9631D148-8618-44BB-88F3-C898DBD1F6DC}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Source_Vs_Targe_For_Rows_Num"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="select (select count(*) from badData.rejectedRows)+(select count(*) from  DWH.fact_crime)&#xA;as total_destination,(select count(*) from[StagingArea].[case_details]) as total_source;"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="total_destination"
+                SQLTask:DtsVariableName="User::total_destination" />
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="total_source"
+                SQLTask:DtsVariableName="User::total_source" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\Update_Last_Bad_Record"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{44A64389-D1CD-48FC-94F4-46E3A999ECCC}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update_Last_Bad_Record"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="UPDATE incremental_table&#xA;SET last_bad_record = (&#xA;    SELECT MAX(full_date)&#xA;    FROM badData.rejectedRows&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\Update_last_Good_Record"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{FCA887A9-6351-4B52-BF74-32A3BCCC1F1D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update_last_Good_Record"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
+              SQLTask:SqlStatementSource="UPDATE incremental_table&#xA;SET last_date = (&#xA;    SELECT MAX(dd.Full_Date)&#xA;    FROM DWH.fact_crime dc&#xA;    JOIN DWH.Dim_Date dd &#xA;        ON dc.date_key = dd.Date_Key&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadingToFactTable\Zero-row-not-found"
+          DTS:CreationName="Microsoft.ScriptTask"
+          DTS:Description="Script Task"
+          DTS:DTSID="{D766528E-B590-4C05-A930-683873A37F88}"
+          DTS:ExecutableType="Microsoft.ScriptTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Zero-row-not-found"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ScriptProject
+              Name="ST_61d38ac710dc4cf1a1ac913e9a9916ea"
+              VSTAMajorVersion="16"
+              VSTAMinorVersion="0"
+              Language="CSharp" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{9F99D088-8518-4FDB-A667-BE40993763CA}"
+          DTS:From="Package\LoadingToFactTable\fact_crimes"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoadingToFactTable\Update_last_Good_Record" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{738BEF88-B42A-4C86-A99B-2BEE48A75597}"
+          DTS:From="Package\LoadingToFactTable\BadData_QualtiyChecks"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\LoadingToFactTable\Update_Last_Bad_Record" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{FA884BF3-7DB4-4404-BAB6-2F83CB44D165}"
+          DTS:From="Package\LoadingToFactTable\Update_Last_Bad_Record"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\LoadingToFactTable\fact_crimes" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{EEF4B118-3447-4558-8E3A-F71D49F6DD61}"
+          DTS:From="Package\LoadingToFactTable\Update_last_Good_Record"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\LoadingToFactTable\Source_Vs_Targe_For_Rows_Num" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{5968777B-0EF2-4CF2-AB58-56E1A12F7AE5}"
+          DTS:From="Package\LoadingToFactTable\Source_Vs_Targe_For_Rows_Num"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\LoadingToFactTable\checking rows number" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{8EBFA4AD-A517-434D-88DC-F0B670488700}"
+          DTS:From="Package\LoadingToFactTable\checking rows number"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\LoadingToFactTable\Referential Integrity" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{DC6D0D11-2129-4234-827F-94B00479DA0D}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::total_undefined]==0"
+          DTS:From="Package\LoadingToFactTable\Referential Integrity"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\LoadingToFactTable\Zero-row-not-found" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 7]"
+          DTS:CreationName=""
+          DTS:DTSID="{B6ABD99D-6D44-4F42-8CBB-E6506334DC70}"
+          DTS:EvalOp="3"
+          DTS:Expression="@[User::total_undefined]&gt;0"
+          DTS:From="Package\LoadingToFactTable\Referential Integrity"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 7"
+          DTS:To="Package\LoadingToFactTable\laod-bad-refernce-found" />
+      </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\LoadingToStagingErea"
@@ -567,6 +1452,95 @@
         <pipeline
           version="1">
           <components>
+            <component
+              refId="Package\LoadingToStagingErea\Conditional Split"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input].Columns[Victim_Age]"
+                      cachedDataType="i4"
+                      cachedName="Victim_Age"
+                      lineageId="Package\LoadingToStagingErea\Data Conversion 1.Outputs[Data Conversion Output].Columns[Victim_Age]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\LoadingToStagingErea\Conditional Split.Outputs[positive_age]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="positive_age"
+                  synchronousInputId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\LoadingToStagingErea\Data Conversion 1.Outputs[Data Conversion Output].Columns[Victim_Age]} &gt; 0</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">[Data Conversion 1].Victim_Age &gt; 0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LoadingToStagingErea\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
             <component
               refId="Package\LoadingToStagingErea\convert Date to db date"
               componentClassID="Microsoft.DerivedColumn"
@@ -3481,19 +4455,19 @@
               startId="Package\LoadingToStagingErea\Data Conversion.Outputs[Data Conversion Output]" />
             <path
               refId="Package\LoadingToStagingErea.Paths[Data Conversion Output1]"
-              endId="Package\LoadingToStagingErea\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
-              name="Data Conversion Output"
-              startId="Package\LoadingToStagingErea\Data Conversion 1.Outputs[Data Conversion Output]" />
-            <path
-              refId="Package\LoadingToStagingErea.Paths[Data Conversion Output2]"
               endId="Package\LoadingToStagingErea\OLE DB Destination 2.Inputs[OLE DB Destination Input]"
               name="Data Conversion Output"
               startId="Package\LoadingToStagingErea\Data Conversion 3.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\LoadingToStagingErea.Paths[Data Conversion Output3]"
+              refId="Package\LoadingToStagingErea.Paths[Data Conversion Output2]"
               endId="Package\LoadingToStagingErea\convert Date to db date.Inputs[Derived Column Input]"
               name="Data Conversion Output"
               startId="Package\LoadingToStagingErea\Convert only Date to string.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\LoadingToStagingErea.Paths[Data Conversion Output3]"
+              endId="Package\LoadingToStagingErea\Conditional Split.Inputs[Conditional Split Input]"
+              name="Data Conversion Output"
+              startId="Package\LoadingToStagingErea\Data Conversion 1.Outputs[Data Conversion Output]" />
             <path
               refId="Package\LoadingToStagingErea.Paths[Derived Column Output]"
               endId="Package\LoadingToStagingErea\Data Conversion 3.Inputs[Data Conversion Input]"
@@ -3519,6 +4493,11 @@
               endId="Package\LoadingToStagingErea\hard to convert 1.Inputs[Union All Input 1]"
               name="OLE DB Destination Error Output"
               startId="Package\LoadingToStagingErea\OLE DB Destination.Outputs[OLE DB Destination Error Output]" />
+            <path
+              refId="Package\LoadingToStagingErea.Paths[positive_age]"
+              endId="Package\LoadingToStagingErea\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+              name="positive_age"
+              startId="Package\LoadingToStagingErea\Conditional Split.Outputs[positive_age]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -3540,23 +4519,6 @@
           SQLTask:SqlStatementSource="truncate table [StagingArea].[case_details]&#xA;truncate table [StagingArea].[victim_factors]&#xA;truncate table [StagingArea].[crime_core]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
-    <DTS:Executable
-      DTS:refId="Package\Update_lastDate"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:DTSID="{FCA887A9-6351-4B52-BF74-32A3BCCC1F1D}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="Update_lastDate"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{7B02B03D-2711-4016-B562-4908BDE82260}"
-          SQLTask:SqlStatementSource="UPDATE incremental_table&#xA;SET last_date = (&#xA;    SELECT MAX(dd.Full_Date)&#xA;    FROM DWH.fact_crime dc&#xA;    JOIN DWH.Dim_Date dd &#xA;        ON dc.date_key = dd.Date_Key&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -3570,11 +4532,11 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{52062F26-2305-4878-8E35-3BD794826D58}"
+      DTS:DTSID="{73FBE646-2652-482B-B150-65DCCF98400D}"
       DTS:From="Package\LoadingDimensionsToDWH"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
-      DTS:To="Package\fact_crimes" />
+      DTS:To="Package\LoadingToFactTable" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
@@ -3591,14 +4553,6 @@
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
       DTS:To="Package\LoadingDimensionsToDWH" />
-    <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
-      DTS:CreationName=""
-      DTS:DTSID="{A02E4E2C-4069-4F91-ADFC-3008F2D31B31}"
-      DTS:From="Package\fact_crimes"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 4"
-      DTS:To="Package\Update_lastDate" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -3611,15 +4565,15 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="134.4,41.6"
+          Id="Package\getMaxDate"
+          TopLeft="300.000000638621,9.17647058019176" />
         <NodeLayout
           Size="142.4,41.6"
           Id="Package\LoadingDimensionsToDWH\dim_category"
           TopLeft="34.3428579669825,13.0352939701823" />
-        <NodeLayout
-          Size="138.4,41.6"
-          Id="Package\LoadingDimensionsToDWH\dim_location"
-          TopLeft="225.085715188908,10.5764704548467" />
         <NodeLayout
           Size="164.8,41.6"
           Id="Package\LoadingDimensionsToDWH\dim_crime_factors"
@@ -3628,6 +4582,10 @@
           Size="152.8,41.6"
           Id="Package\LoadingDimensionsToDWH\dim_junk_detail"
           TopLeft="226.028572315038,68.1647058247075" />
+        <NodeLayout
+          Size="138.4,41.6"
+          Id="Package\LoadingDimensionsToDWH\dim_location"
+          TopLeft="225.085715188908,10.5764704548467" />
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
@@ -3638,25 +4596,57 @@
         <NodeLayout
           Size="184,41.6"
           Id="Package\LoadingToStagingErea"
-          TopLeft="32.1428572112809,89.4705881568698" />
+          TopLeft="60.7142858435305,88.7058822751871" />
+        <NodeLayout
+          Size="189.6,41.6"
+          Id="Package\LoadingToFactTable\BadData_QualtiyChecks"
+          TopLeft="20.9142863650708,26.4705882366346" />
+        <NodeLayout
+          Size="184.8,41.6"
+          Id="Package\LoadingToFactTable\checking rows number"
+          TopLeft="314.787302761486,174.530718745712" />
         <NodeLayout
           Size="132,41.6"
-          Id="Package\fact_crimes"
-          TopLeft="425.000000904713,304.235294198082" />
+          Id="Package\LoadingToFactTable\fact_crimes"
+          TopLeft="280.77142996271,99.6941177931824" />
+        <NodeLayout
+          Size="192.8,41.6"
+          Id="Package\LoadingToFactTable\laod-bad-refernce-found"
+          TopLeft="216.771429536963,334.188235107776" />
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\LoadingToFactTable\Referential Integrity"
+          TopLeft="327.485715486931,244.317646882536" />
+        <NodeLayout
+          Size="240,41.6"
+          Id="Package\LoadingToFactTable\Source_Vs_Targe_For_Rows_Num"
+          TopLeft="9.46825397670136,174.741176279554" />
+        <NodeLayout
+          Size="199.2,41.6"
+          Id="Package\LoadingToFactTable\Update_Last_Bad_Record"
+          TopLeft="243.485715401781,25.6705883733747" />
+        <NodeLayout
+          Size="203.2,41.6"
+          Id="Package\LoadingToFactTable\Update_last_Good_Record"
+          TopLeft="23.0571435124893,102.352941023643" />
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\LoadingToFactTable\Zero-row-not-found"
+          TopLeft="38.200000585403,247.117646905326" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="493.142857892477,271.670588168265">
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint]"
+          TopLeft="280.77142996271,121.823529408413">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,32.5647060298174"
+              EndConnector="-54.5142864502207,0"
               Start="0,0"
-              End="0,25.0647060298174">
+              End="-47.0142864502207,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,25.0647060298174" />
+                    End="-47.0142864502207,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3665,24 +4655,213 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 1]"
+          TopLeft="210.514286365071,46.8705883050047">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.9714290367099,0"
+              Start="0,0"
+              End="25.4714290367099,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="25.4714290367099,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 2]"
+          TopLeft="344.928572682245,67.2705883733747">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.4235294198077"
+              Start="0,0"
+              End="0,24.9235294198077">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.9235294198077" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 3]"
+          TopLeft="127.062698744595,143.952941023643">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30.788235255911"
+              Start="0,0"
+              End="0,23.288235255911">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.288235255911" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 4]"
+          TopLeft="249.468253976701,195.435947512633">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.3190487847846,0"
+              Start="0,0"
+              End="57.8190487847846,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57.8190487847846,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 5]"
+          TopLeft="410.536509124208,216.130718745712">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28.1869281368244"
+              Start="0,0"
+              End="0,20.6869281368244">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.6869281368244" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 6]"
+          TopLeft="327.485715486931,266.517646893931">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-118.085714901528,0"
+              Start="0,0"
+              End="-110.585714901528,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-110.585714901528,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-63.2928574507638,5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToFactTable.PrecedenceConstraints[Constraint 7]"
+          TopLeft="413.885715486931,285.917646882536">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-100.714285949967,48.2705882252394"
+              Start="0,0"
+              End="-100.714285949967,40.7705882252394">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.1352941126197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.1352941126197"
+                    Point2="0,24.1352941126197"
+                    Point3="-4,24.1352941126197" />
+                  <mssgle:LineSegment
+                    End="-96.7142859499673,24.1352941126197" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-96.7142859499673,24.1352941126197"
+                    Point2="-100.714285949967,24.1352941126197"
+                    Point3="-100.714285949967,28.1352941126197" />
+                  <mssgle:LineSegment
+                    End="-100.714285949967,40.7705882252394" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-58.3571429749837,29.1352941126197,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="508.8,430.4"
+          Size="508.8,473.6"
+          Id="Package\LoadingToFactTable"
+          TopLeft="237.142857647672,298.023529191908" />
         <NodeLayout
           Size="180,41.6"
           Id="Package\Truncate StagingArea"
           TopLeft="40.0000000851495,10.7058823435571" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="127.071428648215,52.3058823435571">
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="182.047619176864,88.7058822751871">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,37.1647058133127"
+              EndConnector="164.08571479509,-37.9294116949954"
               Start="0,0"
-              End="0,29.6647058133127">
+              End="164.08571479509,-30.4294116949954">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.6647058133127" />
+                    End="0,-14.8905408567985" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-14.8905408567985"
+                    Point2="0,-18.8905408567985"
+                    Point3="4,-18.8905408567985" />
+                  <mssgle:LineSegment
+                    End="160.08571479509,-18.8905408567985" />
+                  <mssgle:CubicBezierSegment
+                    Point1="160.08571479509,-18.8905408567985"
+                    Point2="164.08571479509,-18.8905408567985"
+                    Point3="164.08571479509,-22.8905408567985" />
+                  <mssgle:LineSegment
+                    End="164.08571479509,-30.4294116949954" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3691,36 +4870,42 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="134.4,41.6"
-          Id="Package\getMaxDate"
-          TopLeft="300.000000638621,9.17647058019176" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="153.476190544614,89.4705881568698">
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="493.414286263956,271.670588168265">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="192.65714342734,-38.694117576678"
+              EndConnector="0,26.3529410236432"
               Start="0,0"
-              End="192.65714342734,-31.194117576678">
+              End="0,18.8529410236432">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-15.2713985357291" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-15.2713985357291"
-                    Point2="0,-19.2713985357291"
-                    Point3="4,-19.2713985357291" />
+                    End="0,18.8529410236432" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="126.690476297673,52.3058823435571">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.39999993163"
+              Start="0,0"
+              End="0,28.89999993163">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="188.65714342734,-19.2713985357291" />
-                  <mssgle:CubicBezierSegment
-                    Point1="188.65714342734,-19.2713985357291"
-                    Point2="192.65714342734,-19.2713985357291"
-                    Point3="192.65714342734,-23.2713985357291" />
-                  <mssgle:LineSegment
-                    End="192.65714342734,-31.194117576678" />
+                    End="0,28.89999993163" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3763,32 +4948,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="156,41.6"
-          Id="Package\Update_lastDate"
-          TopLeft="205.714286152197,305.117646791376" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="425.000000904713,325.476470494729">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-63.285714752516,0"
-              Start="0,0"
-              End="-55.785714752516,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="-55.785714752516,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -3798,41 +4957,21 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="150.4,41.6"
-          Id="Package\LoadingToStagingErea\hard to convert"
-          TopLeft="1.4210854715202E-14,183.647058680086" />
-        <NodeLayout
-          Size="170.4,41.6"
-          Id="Package\LoadingToStagingErea\OLE DB Destination"
-          TopLeft="162.371428898342,184.294117485518" />
-        <NodeLayout
-          Size="130.4,41.6"
-          Id="Package\LoadingToStagingErea\crime_core"
-          TopLeft="637.142858499167,2.95294126293857" />
-        <NodeLayout
           Size="179.2,41.6"
           Id="Package\LoadingToStagingErea\OLE DB Destination 1"
-          TopLeft="535.457143874375,182.764705722153" />
-        <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\LoadingToStagingErea\Data Conversion 3"
-          TopLeft="767.499989507099,217.999997367462" />
-        <NodeLayout
-          Size="160,41.6"
-          Id="Package\LoadingToStagingErea\hard to convert 1"
-          TopLeft="107.142857370936,276.823529169118" />
-        <NodeLayout
-          Size="160,42.4"
-          Id="Package\LoadingToStagingErea\hard to convert_victim"
-          TopLeft="365.714286492795,178.952941126199" />
+          TopLeft="544.02857246405,234.764705676573" />
         <NodeLayout
           Size="167.2,41.6"
           Id="Package\LoadingToStagingErea\crime_case_details"
           TopLeft="167.14285749866,12.999999988605" />
         <NodeLayout
-          Size="155.2,41.6"
-          Id="Package\LoadingToStagingErea\Data Conversion"
-          TopLeft="187.857143257041,95.5882352103308" />
+          Size="164.8,41.6"
+          Id="Package\LoadingToStagingErea\Data Conversion 3"
+          TopLeft="767.499989507099,217.999997367462" />
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\LoadingToStagingErea\hard to convert"
+          TopLeft="1.4210854715202E-14,183.647058680086" />
         <NodeLayout
           Size="179.2,41.6"
           Id="Package\LoadingToStagingErea\OLE DB Destination 2"
@@ -3846,175 +4985,73 @@
           Id="Package\LoadingToStagingErea\crime_victim_factors"
           TopLeft="407.142858009557,17.5882352787009" />
         <NodeLayout
-          Size="164.8,41.6"
-          Id="Package\LoadingToStagingErea\Data Conversion 1"
-          TopLeft="414.285715167619,85.6470587484565" />
+          Size="160,42.4"
+          Id="Package\LoadingToStagingErea\hard to convert_victim"
+          TopLeft="365.714286492795,178.952941126199" />
         <NodeLayout
           Size="190.4,41.6"
           Id="Package\LoadingToStagingErea\convert Date to db date"
           TopLeft="723.83332405736,139.833331557612" />
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[OLE DB Destination Error Output]"
-          TopLeft="247.571428898342,225.894117485518">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-60.4285715274057,50.9294116836002"
-              Start="0,0"
-              End="-60.4285715274057,43.4294116836002">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.4647058418001" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,21.4647058418001"
-                    Point2="0,25.4647058418001"
-                    Point3="-4,25.4647058418001" />
-                  <mssgle:LineSegment
-                    End="-56.4285715274057,25.4647058418001" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-56.4285715274057,25.4647058418001"
-                    Point2="-60.4285715274057,25.4647058418001"
-                    Point3="-60.4285715274057,29.4647058418001" />
-                  <mssgle:LineSegment
-                    End="-60.4285715274057,43.4294116836002" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-103.423192013703,30.4647058418001,146.4178125,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Flat File Source Output1]"
-          TopLeft="702.342858499167,44.5529412629386">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="32.1333342203066,26.2313725875014"
-              Start="0,0"
-              End="32.1333342203066,18.7313725875014">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,9.11568629375071" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,9.11568629375071"
-                    Point2="0,13.1156862937507"
-                    Point3="4,13.1156862937507" />
-                  <mssgle:LineSegment
-                    End="28.1333342203066,13.1156862937507" />
-                  <mssgle:CubicBezierSegment
-                    Point1="28.1333342203066,13.1156862937507"
-                    Point2="32.1333342203066,13.1156862937507"
-                    Point3="32.1333342203066,17.1156862937507" />
-                  <mssgle:LineSegment
-                    End="32.1333342203066,18.7313725875014" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Flat File Source Output]"
-          TopLeft="495.714286588588,59.1882352787009">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,26.4588234697556"
-              Start="0,0"
-              End="0,18.9588234697556">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,18.9588234697556" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Excel Source Output]"
-          TopLeft="250.74285749866,54.599999988605">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="14.7142857583807,40.9882352217258"
-              Start="0,0"
-              End="14.7142857583807,33.4882352217258">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.4941176108629" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.4941176108629"
-                    Point2="0,20.4941176108629"
-                    Point3="4,20.4941176108629" />
-                  <mssgle:LineSegment
-                    End="10.7142857583807,20.4941176108629" />
-                  <mssgle:CubicBezierSegment
-                    Point1="10.7142857583807,20.4941176108629"
-                    Point2="14.7142857583807,20.4941176108629"
-                    Point3="14.7142857583807,24.4941176108629" />
-                  <mssgle:LineSegment
-                    End="14.7142857583807,33.4882352217258" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Derived Column Output]"
-          TopLeft="819.03332405736,181.433331557612">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="30.8666654497387,36.56666580985"
-              Start="0,0"
-              End="30.8666654497387,29.06666580985">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,14.283332904925" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,14.283332904925"
-                    Point2="0,18.283332904925"
-                    Point3="4,18.283332904925" />
-                  <mssgle:LineSegment
-                    End="26.8666654497387,18.283332904925" />
-                  <mssgle:CubicBezierSegment
-                    Point1="26.8666654497387,18.283332904925"
-                    Point2="30.8666654497387,18.283332904925"
-                    Point3="30.8666654497387,22.283332904925" />
-                  <mssgle:LineSegment
-                    End="30.8666654497387,29.06666580985" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="164.8,41.6"
+          Id="Package\LoadingToStagingErea\Data Conversion 1"
+          TopLeft="414.285715167619,85.6470587484565" />
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\LoadingToStagingErea\OLE DB Destination"
+          TopLeft="162.371428898342,184.294117485518" />
+        <NodeLayout
+          Size="155.2,41.6"
+          Id="Package\LoadingToStagingErea\Data Conversion"
+          TopLeft="187.857143257041,95.5882352103308" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\LoadingToStagingErea\hard to convert 1"
+          TopLeft="107.142857370936,276.823529169118" />
+        <NodeLayout
+          Size="154.4,41.6"
+          Id="Package\LoadingToStagingErea\Conditional Split"
+          TopLeft="553.771429377308,150.847058771246" />
+        <NodeLayout
+          Size="130.4,41.6"
+          Id="Package\LoadingToStagingErea\crime_core"
+          TopLeft="637.142858499167,2.95294126293857" />
         <EdgeLayout
           Id="Package\LoadingToStagingErea.Paths[Data Conversion Output3]"
+          TopLeft="522.819048500952,127.247058748457">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="108.152380876355,23.6000000227899"
+              Start="0,0"
+              End="108.152380876355,16.1000000227899">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,5.57615385540131" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,5.57615385540131"
+                    Point2="0,9.57615385540131"
+                    Point3="4,9.57615385540131" />
+                  <mssgle:LineSegment
+                    End="104.152380876355,9.57615385540131" />
+                  <mssgle:CubicBezierSegment
+                    Point1="104.152380876355,9.57615385540131"
+                    Point2="108.152380876355,9.57615385540131"
+                    Point3="108.152380876355,13.5761538554013" />
+                  <mssgle:LineSegment
+                    End="108.152380876355,16.1000000227899" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[Data Conversion Output2]"
           TopLeft="734.476192719474,112.38431385044">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -4048,7 +5085,7 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Data Conversion Output2]"
+          Id="Package\LoadingToStagingErea.Paths[Data Conversion Output1]"
           TopLeft="849.899989507099,259.599997367462">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -4073,40 +5110,6 @@
                     Point3="-61.6809391293089,17.9058833498237" />
                   <mssgle:LineSegment
                     End="-61.6809391293089,20.3117666996474" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\LoadingToStagingErea.Paths[Data Conversion Output1]"
-          TopLeft="522.819048500953,127.247058748456">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="102.238095373423,55.5176469736961"
-              Start="0,0"
-              End="102.238095373423,48.0176469736961">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,18.5273529066344" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,18.5273529066344"
-                    Point2="0,22.5273529066344"
-                    Point3="4,22.5273529066344" />
-                  <mssgle:LineSegment
-                    End="98.2380953734225,22.5273529066344" />
-                  <mssgle:CubicBezierSegment
-                    Point1="98.2380953734225,22.5273529066344"
-                    Point2="102.238095373423,22.5273529066344"
-                    Point3="102.238095373423,26.5273529066344" />
-                  <mssgle:LineSegment
-                    End="102.238095373423,48.0176469736961" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4221,22 +5224,193 @@
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[positive_age]"
+          TopLeft="632.300000920679,192.447058771246">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.3176469053265"
+              Start="0,0"
+              End="0,34.8176469053265">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.8176469053265" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-28.07796875,11.7164406401632,56.1559375,11.384765625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[OLE DB Destination Error Output]"
+          TopLeft="247.571428898342,225.894117485518">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-60.4285715274057,50.9294116836002"
+              Start="0,0"
+              End="-60.4285715274057,43.4294116836002">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.4647058418001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.4647058418001"
+                    Point2="0,25.4647058418001"
+                    Point3="-4,25.4647058418001" />
+                  <mssgle:LineSegment
+                    End="-56.4285715274057,25.4647058418001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-56.4285715274057,25.4647058418001"
+                    Point2="-60.4285715274057,25.4647058418001"
+                    Point3="-60.4285715274057,29.4647058418001" />
+                  <mssgle:LineSegment
+                    End="-60.4285715274057,43.4294116836002" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-103.423192013703,30.4647058418001,146.4178125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[Flat File Source Output1]"
+          TopLeft="702.342858499167,44.5529412629386">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.1333342203069,26.2313725875014"
+              Start="0,0"
+              End="32.1333342203069,18.7313725875014">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.11568629375071" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.11568629375071"
+                    Point2="0,13.1156862937507"
+                    Point3="4,13.1156862937507" />
+                  <mssgle:LineSegment
+                    End="28.1333342203069,13.1156862937507" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28.1333342203069,13.1156862937507"
+                    Point2="32.1333342203069,13.1156862937507"
+                    Point3="32.1333342203069,17.1156862937507" />
+                  <mssgle:LineSegment
+                    End="32.1333342203069,18.7313725875014" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[Flat File Source Output]"
+          TopLeft="495.714286588588,59.1882352787009">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.4588234697556"
+              Start="0,0"
+              End="0,18.9588234697556">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.9588234697556" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[Excel Source Output]"
+          TopLeft="250.74285749866,54.599999988605">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14.7142857583807,40.9882352217258"
+              Start="0,0"
+              End="14.7142857583807,33.4882352217258">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.4941176108629" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.4941176108629"
+                    Point2="0,20.4941176108629"
+                    Point3="4,20.4941176108629" />
+                  <mssgle:LineSegment
+                    End="10.7142857583807,20.4941176108629" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.7142857583807,20.4941176108629"
+                    Point2="14.7142857583807,20.4941176108629"
+                    Point3="14.7142857583807,24.4941176108629" />
+                  <mssgle:LineSegment
+                    End="14.7142857583807,33.4882352217258" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\LoadingToStagingErea.Paths[Derived Column Output]"
+          TopLeft="819.03332405736,181.433331557612">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.8666654497387,36.56666580985"
+              Start="0,0"
+              End="30.8666654497387,29.06666580985">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.283332904925" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.283332904925"
+                    Point2="0,18.283332904925"
+                    Point3="4,18.283332904925" />
+                  <mssgle:LineSegment
+                    End="26.8666654497387,18.283332904925" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.8666654497387,18.283332904925"
+                    Point2="30.8666654497387,18.283332904925"
+                    Point3="30.8666654497387,22.283332904925" />
+                  <mssgle:LineSegment
+                    End="30.8666654497387,29.06666580985" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\LoadingToStagingErea\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\LoadingToStagingErea\OLE DB Destination 1">
     <Properties>
@@ -4265,6 +5439,19 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\LoadingToStagingErea\OLE DB Destination 2">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\LoadingToStagingErea\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
