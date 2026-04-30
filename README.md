@@ -90,3 +90,10 @@
 -   **Conduct post-load referential integrity checks to ensure all foreign keys correctly reference dimension tables.**
 
 ![System Architecture photo](images/2nd_control_flow.png)
+
+--------
+
+## Reporting Layer
+
+![System Architecture photo](images/crime_dashboard.png)
+
