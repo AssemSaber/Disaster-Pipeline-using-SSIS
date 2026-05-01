@@ -58,8 +58,8 @@
 | **Repeat_Offender**  | Indicates whether the suspect has prior offenses   |
 | **Domestic_Related** | Indicates whether the incident is domestic-related |
 
--------
 
+-------
 ## Project Workflow
 -  **Extract crime data from multiple sources (Crime Core, Case Details, Victim Factors).**
 -  **Load raw data into a staging area after truncating previous data.**
@@ -70,6 +70,10 @@
 -  **Perform final data quality checks, including bad records detection and row count reconciliation.**
 -  **Track successful and failed loads using control variables (last good / bad records).**
 -  **Use max date logic to support incremental data loading.**
+-------
+##  Data modeling ( Star Schema ) 
+![System Architecture photo](images/crime_dwh.jpg)
+----
 
 ## <div>**Data Pipeline**</div>
 ### **Extraction → Staging Area Processing → Dimensional Data Loading**
