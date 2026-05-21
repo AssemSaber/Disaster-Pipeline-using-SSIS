@@ -94,7 +94,7 @@
 - **Created derived columns for date handling and temporal analysis.**
 ![System Architecture photo](images/dataflow.png)
 
-## <div>**Fact Table Loading & Data Quality Checks**</div>
+## <div>**Fact Table Loading**</div>
 -   **Perform incremental extraction to retrieve only new records.**
 -   **Apply data validation rules to ensure values meet defined constraints.**
 -   **Load only validated and cleansed data into the fact table.**
