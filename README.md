@@ -71,6 +71,14 @@
 -  **Track successful and failed loads using control variables (last good / bad records).**
 -  **Use max date logic to support incremental data loading.**
 -------
+## Data Quality Checks
+-  **Freshness: ensure data is up to date**
+-  **Column checks: validate low cardinality, positive values, and data types**
+-  **Rejected records: failed rows are stored with error descriptions**
+-  **Referential integrity: ensure valid relationships between tables**
+
+------
+
 ##  Data modeling ( Star Schema ) 
 ![System Architecture photo](images/crime_dwh.jpg)
 ----
@@ -78,7 +86,7 @@
 ## <div>**Data Pipeline**</div>
 ### **Extraction → Staging Area Processing → Dimensional Data Loading**
 
-![System Architecture photo](images/1st_control_flow.png)
+![System Architecture photo](images/control_flow_1.png)
 ### **Staging Area Processing**
 
 -  **Applied Simple Transformation**
@@ -93,7 +101,7 @@
 -   **Reject and isolate invalid records for further inspection or correction.**
 -   **Conduct post-load referential integrity checks to ensure all foreign keys correctly reference dimension tables.**
 
-![System Architecture photo](images/2nd_control_flow.png)
+![System Architecture photo](images/control_flow_2.png)
 
 --------
 
